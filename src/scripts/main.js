@@ -3,18 +3,16 @@
 const ul = document.querySelector('ul');
 const list = [...document.querySelectorAll('li')];
 
-function sortList(li) {
-  return li.sort((el1, el2) => {
-    const salaryEl1 = Number(el1.dataset.salary.replace(/[$,]/g, ''));
-    const salaryEl2 = Number(el2.dataset.salary.replace(/[$,]/g, ''));
-
-    return salaryEl2 - salaryEl1;
-  });
+function getNumber(element) {
+  return Number(element.dataset.salary.replace(/[$,]/g, ''));
 }
 
-const sorted = sortList(list);
+function sortList(li, unList) {
+  li.sort((el1, el2) => getNumber(el2) - getNumber(el1));
+  unList.append(...li);
 
-ul.append(...sorted);
+  return li;
+}
 
 function getEmployees(li) {
   return li.map((el) => ({
@@ -25,5 +23,5 @@ function getEmployees(li) {
   }));
 }
 
-sortList(list);
+sortList(list, ul);
 getEmployees(list);
